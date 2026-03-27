@@ -1,5 +1,5 @@
 <p align="middle">
-  <img width="500px" src="docs/HubSpot-Logo1.png"/>
+  <img width="400px" src="docs/HubSpot-Logo1.png"/>
 </p>
 <h3 align="middle">HubSpot-Salesforce Sync Interface: OAuth 2.0 & Staging-Based Data Pipeline</h3>
 
