@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : eunsu.kim
+ * @group             : 
+ * @last modified on  : 03-27-2026
+ * @last modified by  : eunsu.kim
+**/
 public with sharing class HubCompanyRequest {
     public HubCompanyRequest() {}
 
@@ -8,19 +15,19 @@ public with sharing class HubCompanyRequest {
         System.debug('Start Time : ' + Datetime.now());
 
         try {
-            HUBSPOT__mdt Key = [SELECT token__c FROM HUBSPOT__mdt LIMIT 1];
-            String tokenKey = key.token__c;
+            // HUBSPOT__mdt Key = [SELECT token__c FROM HUBSPOT__mdt LIMIT 1];
+            // String tokenKey = key.token__c;
 
-            String auth_Name = 'Authorization';
-            String auth_Key = tokenKey;
+            // String auth_Name = 'Authorization';
+            // String auth_Key = tokenKey;
 
             String uriAddress = '/crm/v3/objects/companies';
             String propertiesAddress = '?properties=name,domain,zip';
 
-            request.setEndpoint('callout:HUBSPOT' + uriAddress + propertiesAddress);
+            request.setEndpoint('callout:HUBSPOT_AUTH' + uriAddress + propertiesAddress);
             request.setMethod('GET');
 
-            request.setHeader(auth_Name, auth_Key);
+            // request.setHeader(auth_Name, auth_Key);
             request.setHeader('Accept-Encoding','gzip, deflate, br');
             request.setHeader('Connection','keep-alive');
             request.setHeader('Content-Length','0');
@@ -29,6 +36,8 @@ public with sharing class HubCompanyRequest {
             Http http = new Http();
             HttpResponse response = http.send(request);
             String responseBody = response.getBody();
+            System.debug('Status Code : ' + response.getStatusCode());
+            System.debug('Response Body : ' + response.getBody());
 
             Map<String, Object> nameObject = new Map<String, Object>();
             Map<String, Object> zipObject = new Map<String, Object>();  // Postal Code

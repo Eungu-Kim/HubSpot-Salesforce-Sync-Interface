@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : eunsu.kim
+ * @group             : 
+ * @last modified on  : 03-27-2026
+ * @last modified by  : eunsu.kim
+**/
 public with sharing class IF_HubMeetingRequest {
     public IF_HubMeetingRequest() {}
 
@@ -8,19 +15,19 @@ public with sharing class IF_HubMeetingRequest {
         System.debug('Start Time : ' + Datetime.now());
 
         try {
-            HUBSPOT__mdt Key = [SELECT token__c FROM HUBSPOT__mdt LIMIT 1];
-            String tokenKey = key.token__c;
+            // HUBSPOT__mdt Key = [SELECT token__c FROM HUBSPOT__mdt LIMIT 1];
+            // String tokenKey = key.token__c;
 
-            String auth_Name = 'Authorization';
-            String auth_Key = tokenKey;
+            // String auth_Name = 'Authorization';
+            // String auth_Key = tokenKey;
 
             String uriAddress  = '/crm/v3/objects/meetings';
             String propertiesAddress = '?properties=hs_meeting_title,hs_timestamp' + '&associations=companies';
 
-            request.setEndpoint('callout:HUBSPOT' + uriAddress + propertiesAddress);
+            request.setEndpoint('callout:HUBSPOT_AUTH' + uriAddress + propertiesAddress);
             request.setMethod('GET');
 
-            request.setHeader(auth_Name, auth_Key);
+            // request.setHeader(auth_Name, auth_Key);
             request.setHeader('Accept-Encoding','gzip, deflate, br');
             request.setHeader('Connection','keep-alive');
             request.setHeader('Content-Length','0');
