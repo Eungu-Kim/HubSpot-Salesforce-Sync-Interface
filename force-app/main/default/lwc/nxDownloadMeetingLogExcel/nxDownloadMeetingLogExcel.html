@@ -1,0 +1,19 @@
+<template>
+    <div class="slds-is-relative" style="min-height: 100px;">
+        <template if:true={isLoaded}>
+            <lightning-spinner 
+                alternative-text="Loading" 
+                size="medium" 
+                variant="brand">
+            </lightning-spinner>
+        </template>
+
+        <div class="slds-align_absolute-center">
+            <lightning-button 
+                variant="brand" 
+                label="엑셀 다운로드 시작" 
+                onclick={handleExcelDownloadList}>
+            </lightning-button>
+        </div>
+    </div>
+</template>
