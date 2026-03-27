@@ -1,5 +1,5 @@
 <p align="middle">
-  <img width="400px" src="docs/HubSpot-Logo1.png"/>
+  <img width="350px" src="docs/HubSpot-Logo1.png"/>
 </p>
 <h3 align="middle">HubSpot-Salesforce Sync Interface: OAuth 2.0 & Staging-Based Data Pipeline</h3>
 
@@ -21,8 +21,8 @@ HubSpot과 Salesforce 간 데이터를 안정적으로 연동하기 위한 **API
 
 ### 외부 CRM 연동의 필요성
 
-기업 환경에서는 하나의 CRM만 사용하는 경우보다  
-**여러 SaaS(HubSpot, Salesforce 등)를 함께 사용하는 경우가 많음**
+기업 환경에서는 하나의 솔루션만 사용하는 경우보다  
+**여러 솔루션(HubSpot, Salesforce, SAP 등)을 함께 사용하는 경우가 많음**
 
 이때 고객/영업 데이터가 서로 다른 시스템에 분산되면서  
 **데이터 불일치, 수동 관리, 운영 비효율 문제**가 발생  
