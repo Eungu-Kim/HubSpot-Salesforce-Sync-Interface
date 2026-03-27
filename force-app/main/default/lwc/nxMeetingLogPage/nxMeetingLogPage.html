@@ -1,0 +1,130 @@
+<template>
+    <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none parent-box">
+        <article class="slds-card">
+            <!-- [start] table section > header -->
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name='standard:price_adjustment_schedule' size='small' title={pageTitle}></lightning-icon>
+                    </div>
+                    <div class=""><!--slds-media__body-->
+                        <h2 class="slds-card__header-title">
+                            <span>{pageTitle}</span>
+                        </h2>
+                    </div>
+                    <div class="slds-no-flex slds-col_bump-left">
+                        <lightning-button variant="Neutral" label="엑셀 다운로드" onclick={handleExcelDownload} class="excel slds-m-left_x-small"></lightning-button>
+                    </div>
+                </header>
+            </div>
+            <!-- [end] table section > header -->
+
+            <!-- [start] search & table section -->
+            <div class="slds-card__body slds-card__body_inner">
+                <!-- [start] search area -->
+                <div class="search-area slds-m-bottom_small">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 search-input-col">
+                            <lightning-input
+                                type="text"
+                                label="Account Name"
+                                value={accountName}
+                                onchange={handleAccountNameChange}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_auto search-button-col">
+                            <lightning-button
+                                variant="brand"
+                                label="조회"
+                                onclick={handleSearchClick}
+                                class="search-button">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <!-- [end] search area -->
+
+                <!-- [start] table section > datatable -->
+                <div style="overflow: auto; max-width: 100%; min-height:350px; max-height: 500px;">
+                        <table
+                            class="table-wrap slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="bg-purple font-white" scope="col" style="padding: 8px;">
+                                        Title</th>
+                                    <th class="bg-purple font-white" scope="col" style="padding: 8px;">
+                                        Task</th>
+                                    <th class="bg-purple font-white" scope="col" style="padding: 8px;">
+                                        Account</th>
+                                    <th class="bg-purple font-white" scope="col" style="padding: 8px;">
+                                        Start</th>
+                                    <th class="bg-purple font-white" scope="col" style="padding: 8px;">
+                                        Content</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={isLoading}>
+                                    <tr>
+                                        <td colspan={emptyRowColspan} style="height: 300px; vertical-align: middle;">
+                                            <div class="exampleHolder">
+                                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                                <template if:false={isLoading}>
+                                    <template lwc:if={isSearched}>
+                                        <template lwc:if={isHasData}>
+                                            <template for:each={meetingLogData} for:item="item">
+                                                <tr key={item.id} class="slds-hint-parent">
+                                                    <td>
+                                                        <template if:true={item.titleUrl}>
+                                                            <a href={item.titleUrl}
+                                                                target="_blank">{item.title}</a>
+                                                        </template>
+                                                        <template if:false={item.titleUrl}>
+                                                            {item.title}
+                                                        </template>
+                                                    </td>
+                                                    <td>
+                                                        <template if:true={item.taskUrl}>
+                                                            <a href={item.taskUrl} target="_blank">{item.task}</a>
+                                                        </template>
+                                                        <template if:false={item.taskUrl}>
+                                                            {item.task}
+                                                        </template>
+                                                    </td>
+                                                    <td>
+                                                        <template if:true={item.soldToUrl}>
+                                                            <a href={item.soldToUrl} target="_blank">{item.soldTo}</a>
+                                                        </template>
+                                                        <template if:false={item.soldToUrl}>
+                                                            {item.soldTo}
+                                                        </template>
+                                                    </td>
+                                                    <td>{item.start}</td>
+                                                    <td>{item.content}</td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                        <template lwc:else>
+                                            <tr>
+                                                <td colspan={emptyRowColspan} rowspan="1"
+                                                    style="height: 300px; font-weight: bolder; vertical-align: middle; text-align: center;">
+                                                    데이터가 없습니다
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- [end] table section -->
+            </div>
+            </article>
+        <div class="hidden-excel-component">
+            <c-nx-download-meeting-log-excel></c-nx-download-meeting-log-excel>
+        </div>
+    </div>
+</template>
