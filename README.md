@@ -82,9 +82,11 @@ Salesforce 데이터 모델에 맞게 매핑 및 저장
 
 ### 5. LWC 기반 회의록 조회 기능
 
-- Account Name 기반 검색 필터  
-- 전체 조회 / 조건 조회 지원  
-- Apex 연동(Wire / Imperative)  
+- Account Name 기반 검색 필터
+  ![search_test](https://github.com/Eungu-Kim/HubSpot-Salesforce-Sync-Interface/releases/download/v1.0/search_download.gif)
+  
+- 전체 조회 / 조건 조회 지원
+  ![search_all](https://github.com/Eungu-Kim/HubSpot-Salesforce-Sync-Interface/releases/download/v1.0/search_all.gif)
 
 ### 6. 공통 엑셀 다운로드 모듈
 
