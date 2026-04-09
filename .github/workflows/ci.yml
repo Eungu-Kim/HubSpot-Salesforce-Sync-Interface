@@ -1,0 +1,36 @@
+name: Salesforce CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - feature/**
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v3
+
+      - name: Node 설치
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Salesforce CLI 설치
+        run: npm install sfdx-cli -g
+
+      - name: 인증
+        run: |
+          echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
+          sfdx auth:sfdxurl:store -f auth.txt -a ci-org
+
+      - name: 배포 (검증용)
+        run: sfdx force:source:deploy -p force-app
+
+      - name: Apex 테스트 실행
+        run: sf project deploy start --source-dir force-app --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
