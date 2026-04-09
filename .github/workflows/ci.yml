@@ -33,4 +33,4 @@ jobs:
         run: sf project deploy start --source-dir force-app
 
       - name: Apex 테스트 실행
-        run: sf project deploy start --source-dir force-app --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
+        run: sf project deploy start --source-dir force-app --target-org ci-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
