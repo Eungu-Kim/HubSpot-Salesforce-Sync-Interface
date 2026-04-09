@@ -27,7 +27,7 @@ jobs:
       - name: 인증
         run: |
           echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
-          sfdx auth:sfdxurl:store -f auth.txt -a ci-org
+          sf org login sfdx-url --sfdx-url-file auth.txt --alias ci-org --no-prompt
 
       - name: 배포 (검증용)
         run: sfdx force:source:deploy -p force-app
