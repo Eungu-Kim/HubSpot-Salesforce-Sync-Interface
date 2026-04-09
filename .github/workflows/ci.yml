@@ -29,8 +29,5 @@ jobs:
           echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
           sf org login sfdx-url --sfdx-url-file auth.txt --alias ci-org --no-prompt
 
-      - name: 배포 (검증용)
-        run: sf project deploy start --source-dir force-app
-
-      - name: Apex 테스트 실행
+      - name: 배포 + 테스트 실행
         run: sf project deploy start --source-dir force-app --target-org ci-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
