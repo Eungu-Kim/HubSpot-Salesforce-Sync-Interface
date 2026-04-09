@@ -22,7 +22,7 @@ jobs:
           node-version: '18'
 
       - name: Salesforce CLI 설치
-        run: npm install sfdx-cli -g
+        run: npm install -g @salesforce/cli
 
       - name: 인증
         run: |
