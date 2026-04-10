@@ -7,7 +7,7 @@
 
 ## 📝 작품소개
 
-ci test message
+ci test message 2026-04-10
 
 HubSpot과 Salesforce 간 데이터를 안정적으로 연동하기 위한 **API 기반 인터페이스 구축 프로젝트**입니다.
 
