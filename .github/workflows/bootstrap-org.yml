@@ -1,0 +1,50 @@
+name: Bootstrap Salesforce Org
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'ci-org OR target-org 선택'
+        required: true
+        default: 'ci'
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v3
+
+      - name: Node 설치
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Salesforce CLI 설치
+        run: npm install -g @salesforce/cli
+
+      - name: Org 인증
+        run: |
+          if [ "${{ github.event.inputs.target }}" = "ci" ]; then
+            echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
+            sf org login sfdx-url --sfdx-url-file auth.txt --alias my-org --no-prompt
+          else
+            echo "${{ secrets.SF_AUTH_URL_TARGET }}" > auth.txt
+            sf org login sfdx-url --sfdx-url-file auth.txt --alias my-org --no-prompt
+          fi
+
+      # 기반 메타데이터
+      - name: Deploy Base Metadata (objects, fields)
+        run: |
+          sf project deploy start \
+            --source-dir force-app/main/default/objects \
+            --target-org my-org
+
+      # 나머지 메타데이터
+      - name: Deploy Remaining Metadata
+        run: |
+          sf project deploy start \
+            --source-dir force-app \
+            --target-org my-org \
+            --test-level NoTestRun

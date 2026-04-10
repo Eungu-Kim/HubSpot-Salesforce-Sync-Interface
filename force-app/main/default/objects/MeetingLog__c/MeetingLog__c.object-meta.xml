@@ -58,13 +58,6 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <content>NX_MeetingLogNewOverride</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>LightningComponent</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>Edit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -181,8 +174,6 @@
         <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>PrintableListView</excludedStandardButtons>
         <excludedStandardButtons>MassAssignRecordLabel</excludedStandardButtons>
-        <listViewButtons>ExcelDownload</listViewButtons>
-        <searchResultsCustomButtons>ExcelDownload</searchResultsCustomButtons>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
