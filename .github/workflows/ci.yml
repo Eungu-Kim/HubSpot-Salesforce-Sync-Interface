@@ -1,4 +1,4 @@
-name: Salesforce CI
+name: Salesforce CI/CD
 
 on:
   pull_request:
@@ -6,10 +6,11 @@ on:
       - main
   push:
     branches:
-      - feature/**
+      - main
 
 jobs:
   validate:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -24,10 +25,34 @@ jobs:
       - name: Salesforce CLI 설치
         run: npm install -g @salesforce/cli
 
-      - name: 인증
+      - name: CI Org 인증
         run: |
           echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
           sf org login sfdx-url --sfdx-url-file auth.txt --alias ci-org --no-prompt
 
-      - name: 배포 + 테스트 실행
-        run: sf project deploy start --source-dir force-app --target-org ci-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
+      - name: 테스트 실행
+        run: sf project deploy validate --source-dir force-app --target-org ci-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
+
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v3
+
+      - name: Node 설치
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Salesforce CLI 설치
+        run: npm install -g @salesforce/cli
+
+      - name: Target Org 인증
+        run: |
+          echo "${{ secrets.SF_AUTH_URL_TARGET }}" > auth.txt
+          sf org login sfdx-url --sfdx-url-file auth.txt --alias target-org --no-prompt
+
+      - name: Target Org 배포
+        run: sf project deploy start --source-dir force-app --target-org target-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
