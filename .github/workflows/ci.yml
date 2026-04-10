@@ -30,7 +30,7 @@ jobs:
           echo "${{ secrets.SF_AUTH_URL }}" > auth.txt
           sf org login sfdx-url --sfdx-url-file auth.txt --alias ci-org --no-prompt
 
-      - name: 테스트 실행
+      - name: Validate (테스트 포함)
         run: sf project deploy validate --source-dir force-app --target-org ci-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
 
   deploy:
@@ -54,5 +54,5 @@ jobs:
           echo "${{ secrets.SF_AUTH_URL_TARGET }}" > auth.txt
           sf org login sfdx-url --sfdx-url-file auth.txt --alias target-org --no-prompt
 
-      - name: Target Org 배포
+      - name: Target Org에 배포
         run: sf project deploy start --source-dir force-app --target-org target-org --test-level RunSpecifiedTests --tests HubCompanyBatch_Test HubCompanyRequest_Test IF_HubMeetingBatch_Test IF_HubMeetingRequest_Test NX_DownloadMeetingLogExcelControllerTest
